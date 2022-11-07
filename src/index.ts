@@ -4,6 +4,7 @@ import router from './api/routes';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import logger from './api/middlewares/logger.middleware';
 
 const app = express();
 const port = 3000;
@@ -17,6 +18,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 //enable all CORS request
 app.use(cors());
+// add logger middleware
+app.use(logger);
 
 app.use('/api/', router);
 
