@@ -5,10 +5,19 @@ import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import logger from './api/middlewares/logger.middleware';
+import { generateToken } from './api/utils/jwt.utils';
 
 const app = express();
 const port = 3000;
 
+// Only generate a token for lower level environments
+if (process.env.NODE_ENV !== 'production') {
+  console.log('JWT', generateToken());
+}
+
+/**
+ * Application level middlewares
+ */
 //compresses all the responses
 app.use(compression());
 //adding a set of security middlewares
