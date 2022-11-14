@@ -7,6 +7,8 @@ import cors from 'cors';
 import logger from './api/middlewares/logger.middleware';
 import { generateToken } from './api/utils/jwt.utils';
 import errorHandler from './api/middlewares/error-handler.middleware';
+import * as MySQLConnector from './api/utils/mysql.connector';
+import * as path from 'path';
 
 const app = express();
 const port = 3000;
@@ -19,6 +21,10 @@ if (process.env.NODE_ENV !== 'production') {
 /**
  * Application level middlewares
  */
+// create database pool
+MySQLConnector.init();
+// serve static files
+app.use(express.static(path.join(__dirname, '../public')));
 //compresses all the responses
 app.use(compression());
 //adding a set of security middlewares
